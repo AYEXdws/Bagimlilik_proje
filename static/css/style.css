@@ -157,9 +157,60 @@ footer { background: #EAEAEA; text-align: center; padding: 20px; font-size: 0.9r
 .disclaimer { font-size: 0.8rem; margin-top: 5px; }
 
 /* --- Mobil Uyum (Responsive) --- */
+/* --- GÜNCELLENMİŞ VE DOĞRU Mobil Uyum (Responsive) --- */
 @media (max-width: 768px) {
-    .nav-links, .user-area { display: none; }
-    .hamburger { display: block; }
+    .nav-menu {
+        display: none; /* Menüyü normalde gizle */
+        position: absolute;
+        top: 70px; /* Header'ın bittiği yerden başla */
+        left: 0;
+        width: 100%;
+        background-color: var(--primary-color);
+        flex-direction: column; /* Linkleri alt alta diz */
+        padding: 20px 0;
+        gap: 20px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .nav-menu.active {
+        display: flex; /* JavaScript 'active' class'ı ekleyince menüyü göster */
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        display: flex; /* Her zaman görünür olsun (parent'ı gizli) */
+        align-items: center;
+    }
+
+    .user-area {
+        flex-direction: column;
+        gap: 15px;
+        display: flex; /* Her zaman görünür olsun (parent'ı gizli) */
+        align-items: center;
+    }
+
+    .hamburger {
+        display: flex; /* Hamburger ikonunu her zaman görünür yap */
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    /* Hamburger ikonunun 'X' işaretine dönüşme animasyonu */
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(7px, 7px);
+    }
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    /* Diğer mobil stil düzeltmeleri */
     .hero h1 { font-size: 2.2rem; }
     .page-content h1 { font-size: 2rem; }
 }
+
+
