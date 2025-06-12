@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Giriş Yap - Kontrol Sende{% endblock %}
+{% block content %}
+<div class="container page-content">
+    <h1>Tekrar Hoş Geldin</h1>
+    <p class="subtitle">Hikayene kaldığın yerden devam et.</p>
+    <form action="{{ url_for('giris_yap') }}" method="post" class="story-form">
+        <input type="text" name="username" placeholder="Kullanıcı Adı" required>
+        <input type="password" name="password" placeholder="Parola" required>
+        <button type="submit">Giriş Yap</button>
+    </form>
+</div>
+{% endblock %}
