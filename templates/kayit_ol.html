@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container page-content">
     <h1>Topluluğumuza Katıl</h1>
-    <p class="subtitle">Bir hesap oluşturarak hikayeni güvenle paylaşabilir ve diğerlerine ilham olabilirsin.</p>
+    <p class="subtitle">Bir hesap oluşturarak hikayeni güvenle paylaşabilirsin.</p>
     <form action="{{ url_for('kayit_ol') }}" method="post" class="story-form">
         <input type="text" name="username" placeholder="Kullanıcı Adı" required minlength="3">
         <input type="password" name="password" placeholder="Parola" required minlength="3">
