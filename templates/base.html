@@ -13,6 +13,7 @@
     <header>
         <nav class="container">
             <a href="{{ url_for('index') }}" class="logo">KontrolSende</a>
+            
             <div class="nav-menu">
                 <ul class="nav-links">
                     <li><a href="{{ url_for('index') }}">Ana Sayfa</a></li>
@@ -43,7 +44,7 @@
             </div>
           {% endif %}
         {% endwith %}
-
+        
         {% block content %}{% endblock %}
     </main>
 
@@ -53,6 +54,7 @@
             <p class="disclaimer">Bu site tıbbi bir teşhis koymaz, sadece bilgilendirme ve yol gösterme amacı taşır.</p>
         </div>
     </footer>
+
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
