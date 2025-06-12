@@ -13,7 +13,6 @@
     <header>
         <nav class="container">
             <a href="{{ url_for('index') }}" class="logo">KontrolSende</a>
-            
             <div class="nav-menu">
                 <ul class="nav-links">
                     <li><a href="{{ url_for('index') }}">Ana Sayfa</a></li>
@@ -35,26 +34,23 @@
             <button class="hamburger" id="hamburger-menu"><span></span><span></span><span></span></button>
         </nav>
     </header>
-
     <main>
-        {% with messages = get_flashed_messages() %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
-            <div class="container">
-                <div class="flash-message">{{ messages[0] }}</div>
-            </div>
+            {% for category, message in messages %}
+              <div class="container">
+                  <div class="flash-message {{ category }}">{{ message }}</div>
+              </div>
+            {% endfor %}
           {% endif %}
         {% endwith %}
-        
         {% block content %}{% endblock %}
     </main>
-
     <footer>
         <div class="container">
             <p>&copy; 2025 KontrolSende Platformu.</p>
-            <p class="disclaimer">Bu site tıbbi bir teşhis koymaz, sadece bilgilendirme ve yol gösterme amacı taşır.</p>
         </div>
     </footer>
-
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
