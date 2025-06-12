@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Kontrol Sende{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="{{ url_for('index') }}" class="logo">KontrolSende</a>
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="{{ url_for('index') }}">Ana Sayfa</a></li>
+                    <li><a href="{{ url_for('test') }}">Test Et</a></li>
+                    <li><a href="{{ url_for('etkinlikler') }}">Etkinlikler</a></li>
+                    <li><a href="{{ url_for('yardim') }}">Yardım Al</a></li>
+                </ul>
+                <div class="user-area">
+                    {% if g.user %}
+                        <span>Hoş geldin, {{ g.user }}!</span>
+                        <a href="{{ url_for('hikaye_yaz') }}" class="nav-button">Hikaye Yaz</a>
+                        <a href="{{ url_for('cikis_yap') }}" class="nav-button secondary">Çıkış Yap</a>
+                    {% else %}
+                        <a href="{{ url_for('giris_yap') }}" class="nav-button">Giriş Yap</a>
+                        <a href="{{ url_for('kayit_ol') }}" class="nav-button secondary">Kayıt Ol</a>
+                    {% endif %}
+                </div>
+            </div>
+            <button class="hamburger" id="hamburger-menu"><span></span><span></span><span></span></button>
+        </nav>
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="container">
+                <div class="flash-message">{{ messages[0] }}</div>
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 KontrolSende Platformu.</p>
+            <p class="disclaimer">Bu site tıbbi bir teşhis koymaz, sadece bilgilendirme ve yol gösterme amacı taşır.</p>
+        </div>
+    </footer>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
