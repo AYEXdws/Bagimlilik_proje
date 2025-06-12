@@ -2,18 +2,17 @@ import os
 import time
 import psycopg2
 from flask import Flask, render_template, request, redirect, g, session, flash, url_for
-from profanity_filter import ProfanityFilter
+# YENİ VE DOĞRU KÜTÜPHANEYİ İÇERİ AKTARIYORUZ
+from better_profanity import profanity
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # --- UYGULAMA KURULUMU ---
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY') 
 DATABASE_URL = os.environ.get('DATABASE_URL')
-pf = ProfanityFilter()
 
 # --- VERİTABANI İŞLEMLERİ ---
 def get_db_connection():
-    """Veritabanı bağlantısı oluşturur."""
     try:
         conn = psycopg2.connect(DATABASE_URL)
         return conn
@@ -22,7 +21,6 @@ def get_db_connection():
         return None
 
 def setup_database():
-    """Gerekli tabloları veritabanında oluşturur."""
     conn = get_db_connection()
     if conn is None:
         print("Veritabanı kurulumu atlandı: Bağlantı kurulamadı.")
@@ -77,8 +75,7 @@ def kayit_ol():
             return redirect(url_for('kayit_ol'))
         with conn.cursor() as cur:
             cur.execute("SELECT id FROM users WHERE username = %s;", (username,))
-            user_exists = cur.fetchone()
-            if user_exists:
+            if cur.fetchone():
                 flash("Bu kullanıcı adı zaten alınmış.")
             else:
                 hashed_password = generate_password_hash(password)
@@ -126,23 +123,22 @@ def hikaye_yaz():
 @app.route('/hikaye-gonder', methods=['POST'])
 def hikaye_gonder():
     if not g.user: return redirect(url_for('giris_yap'))
-    
+
     story_text = request.form.get('story')
     if not story_text or len(story_text) < 20:
         flash("Hikayen en az 20 karakter olmalıdır.")
         return redirect(url_for('hikaye_yaz'))
-    
-    # Kütüphane adını düzeltiyoruz
-    from better_profanity import profanity
+
+    # KÜFÜR FİLTRESİ KONTROLÜNÜ YENİ KÜTÜPHANEYE GÖRE GÜNCELLİYORUZ
     if profanity.contains_profanity(story_text):
         flash("Yazınızda uygun olmayan kelimeler tespit edildi. Lütfen düzenleyin.")
         return redirect(url_for('hikaye_yaz'))
-        
+
     last_submission_key = f"last_submission_{g.user}"
     if time.time() - session.get(last_submission_key, 0) < 60:
         flash("Çok hızlı gönderim yapıyorsunuz. Lütfen biraz bekleyin.")
         return redirect(url_for('hikaye_yaz'))
-    
+
     conn = get_db_connection()
     if not conn:
         flash("Sistemde geçici bir sorun var, hikayen kaydedilemedi.")
@@ -151,7 +147,7 @@ def hikaye_gonder():
         cur.execute("INSERT INTO stories (author_username, content) VALUES (%s, %s);", (g.user, story_text))
     conn.commit()
     conn.close()
-    
+
     session[last_submission_key] = time.time()
     flash("Hikayen başarıyla paylaşıldı!", "success")
     return redirect(url_for('index'))
