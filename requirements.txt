@@ -2,4 +2,3 @@ Flask
 profanity-filter
 gunicorn
 psycopg2-binary
-werkzeug
