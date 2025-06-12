@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Farkındalık Testi - Kontrol Sende{% endblock %}
+{% block content %}
+<div class="container page-content">
+    <h1>Alışkanlık Farkındalık Testi</h1>
+    <p class="subtitle">Bu test tıbbi bir teşhis değildir. Sadece kendi yönelimlerin üzerine düşünmen için bir araçtır.</p>
+    <div id="quiz-container" class="quiz-container">
+        <div id="progress-bar-container"><div id="progress-bar"></div></div>
+        <div id="question-container" class="question"></div>
+        <div id="quiz-navigation"><button id="next-btn">Sonraki Soru</button></div>
+    </div>
+    <div id="result-container" class="result-container" style="display:none;"></div>
+</div>
+{% endblock %}
