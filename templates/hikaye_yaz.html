@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{{% extends "base.html" %}
 {% block title %}Hikayeni Paylaş - Kontrol Sende{% endblock %}
 {% block content %}
 <div class="container page-content">
     <h1>Hikayenle İlham Ver</h1>
-    <p class="subtitle">Merhaba, {{ g.user }}! Bağımlılıkla mücadeleni ve bu süreçte öğrendiklerini bizimle paylaş.</p>
+    <p class="subtitle">Merhaba, {{ g.user }}! Mücadeleni ve öğrendiklerini bizimle paylaş.</p>
     <form action="{{ url_for('hikaye_gonder') }}" method="post" class="story-form">
         <textarea name="story" rows="10" placeholder="Buraya kendi hikayeni yaz... (En az 20 karakter)" required minlength="20"></textarea>
         <button type="submit">Hikayemi Gönder</button>
